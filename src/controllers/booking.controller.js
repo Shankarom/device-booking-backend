@@ -8,21 +8,26 @@ const getBookings = catchAsync(async (req, res) => {
     const filter = pick(req.query, ['name', 'role']);
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     const { search } = pick(req.query, ['search']);
-    // const condition = {
-    //   isDeleted: fasl
-    // }
-//     if(req.query.status === 'approve'){
-//     options.populate = 'bookedBy'
-//     const result = await bookingService.bookings(filter, options, search);
-//     return res.status(200).json({
-//         message:"Devices list",success: true, result
-//     });
-// } 
-    options.populate = 'requestedBy'
-    req.query.status? (filter.bookingStatus =req.query.status) : filter
+
+    options.populate = 'requestedBy,license,company,device'
+    req.query.status ? (filter.bookingStatus = req.query.status) : filter
     const result = await bookingService.requests(filter, options, search);
+    const extractedData = result.results.map(item => {
+        return {
+            companyName: item.company.companyName,
+            licenseName: item.license.name,
+            userFirstName: item.requestedBy.firstName,
+            userLastName: item.requestedBy.lastName,
+            userEmail: item.requestedBy.email,
+            deviceName: item.device.name,
+            bookingStatus: item.bookingStatus,
+            createdAt: item.createdAt,
+            updatedAt: item.updatedAt
+        };
+    });
+    result.results = extractedData
     return res.status(200).json({
-        message:"Devices request list",success: true, result
+        message: "Devices request list", success: true, result
     });
 
 });

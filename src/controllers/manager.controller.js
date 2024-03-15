@@ -70,14 +70,13 @@ const getManagerAssignedDevices = catchAsync(async (req, res) => {
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     const { search } = pick(req.query, ['search']);
 
-    const result1 = await userService.getManagerAssignedDevices(req.params.managerId, options, search);
-    console.log("🚀 ~ getManagerAssignedDevices ~ result:", result1)
-    const finalData = result1.data
+    const result = await userService.getManagerAssignedDevices(req.params.managerId, options, search);
+    const finalData = result.data
     const pageDetails = {
-        page: result1.page,
-        limit: result1.limit,
-        totalPages: result1.totalPages,
-        totalResults: result1.totalResults
+        page: result.page,
+        limit: result.limit,
+        totalPages: result.totalPages,
+        totalResults: result.totalResults
     }
     const results = finalData.map(item => item.devices);
     return res.status(200).json({

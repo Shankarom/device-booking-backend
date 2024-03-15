@@ -4,7 +4,7 @@ const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { userService, companyService, deviceService, emailService } = require('../services');
 const {userType} = require('../config/roles');
-
+const {Company} = require('../models/index')
 const createUser = catchAsync(async (req, res) => {
   Object.assign(req.body, { authType: 'email' });
   const user = await userService.createUser(req.body);
@@ -37,9 +37,23 @@ const getUsers = catchAsync(async (req, res) => {
   const { search } = pick(req.query, ['search']);
   // const condition = {
   //   isDeleted: fasl
-  // }
+    options.populate = 'company'
+  filter.userType = 'user'
   const result = await userService.queryUsers(filter, options, search);
-  res.send(result);
+  const extractedData = result.results.map(item => {
+    return {
+        companyName: item?.company?.companyName,
+        firstName: item.firstName,
+        lastName: item.lastName,
+        email: item.email,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt
+    };
+});
+result.results = extractedData
+  return res.status(200).json({
+    message:"Users list",success: true, result
+});
 });
 
 const getUser = catchAsync(async (req, res) => {

@@ -15,6 +15,10 @@ const userSchema = mongoose.Schema(
       type: String,
       trim: true,
     },
+    company: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Company'
+    },
     email: {
       type: String,
       required: true,

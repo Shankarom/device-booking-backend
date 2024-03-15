@@ -9,7 +9,7 @@ const authController = require('../../controllers/auth.controller');
 const router = express.Router();
 
 router.post('/login', validate(authValidation.login), authController.loginEmail);
-router.get('/users', auth('getCompanyUsers'), companyController.getCompanyAssociatedUsers);
+router.get('/users/:companyId', auth('getCompanyUsers'), companyController.getCompanyAssociatedUsers);
 
 router
   .route('/')

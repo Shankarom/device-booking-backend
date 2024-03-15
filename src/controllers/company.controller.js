@@ -72,6 +72,7 @@ const addUser = catchAsync(async (req, res) => {
                 currentUserCountRemainig: req.user.currentUserCountRemainig - 1
             }
             await companyService.updateCompanyById(req.user._id, doc);
+            await userService.updateUserById(user._id,{company:req.user._id})
             await emailService.sendEmail(req.body.email, 'Login credential', createPassword);
             return res.status(httpStatus.CREATED).json({
                 message: "User added successfully", success: true, user
@@ -116,17 +117,19 @@ const getCompanyAssociatedUsers = catchAsync(async (req, res) => {
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     const { search } = pick(req.query, ['search']);
 
-    const result = await companyService.getCompanyAssociatedUsers(req.user._id, options, search);
+    const result = await companyService.getCompanyAssociatedUsers(req.params.companyId, options, search);
     const finalData = result.data
-    const rearrangedData = finalData.map(item => item.users);
-    return res.status(200).json({
-        success: true,
-        message: "Users list",
-        data: rearrangedData,
+    const pageDetails = {
         page: result.page,
         limit: result.limit,
         totalPages: result.totalPages,
         totalResults: result.totalResults
+    }
+    const results = finalData.map(item => item.users);
+    return res.status(200).json({
+        success: true,
+        message: "Users list",
+        result: {results, pageDetails}
     });
 });
 

@@ -1,6 +1,6 @@
 const allRoles = {
   user: [],
-  superadmin: ['getUsers', 'manageUsers', 'getDevice', 'manageDevices', 'managePlans', 'getPlans','createCompany','getBookings'],
+  superadmin: ['getUsers', 'manageUsers', 'getDevice', 'manageDevices', 'managePlans', 'getPlans','createCompany','getBookings','getCompanyUsers'],
   company:['removeUser', 'addUser', 'getCompanyUsers'],
   manager:[]
 };
