@@ -33,7 +33,7 @@ const unexpectedErrorHandler = (error) => {
 //     console.log("Attempting to create admin user...");
 //     await createAdminUser();
 //   } catch (error) {
-//     next(error);
+//     return error
 //   }
 // };
 // createAdminUserMiddleware()

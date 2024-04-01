@@ -26,7 +26,7 @@ const createCompany = catchAsync(async (req, res) => {
 });
 
 const getCompanys = catchAsync(async (req, res) => {
-    const filter = pick(req.query, ['firstName', 'lastName', 'email']);
+    const filter = pick(req.query, ['companyName', 'email']);
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     const { search } = pick(req.query, ['search']);
     const result = await companyService.queryCompanies(filter, options, search);
@@ -53,9 +53,7 @@ const updateCompany = catchAsync(async (req, res) => {
 });
 
 const deleteCompany = catchAsync(async (req, res) => {
-    console.log('cccccccccccc')
     await companyService.deleteCompanyById(req.params.companyId);
-    // res.status(httpStatus.CREATED).send({message:"Device Deleted successfully"});
     return res.status(200).json({
         message:"Company deleted successfully",success: true
     });

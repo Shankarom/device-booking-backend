@@ -2,7 +2,7 @@ const allRoles = {
   user: [],
   superadmin: ['getUsers', 'manageUsers', 'getDevice', 'manageDevices', 'managePlans', 'getPlans','createCompany','getBookings','getCompanyUsers'],
   company:['removeUser', 'addUser', 'getCompanyUsers'],
-  manager:[]
+  manager:['getBookings','getDevice']
 };
 const bookingStatus = {
   PENDING: 'pending',

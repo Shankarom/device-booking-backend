@@ -19,7 +19,7 @@ router
     .patch(auth('manageUsers'), validate(userValidation.updateManager), managerController.updateManager)
     .delete(auth('manageUsers'), validate(userValidation.deleteManager), managerController.deleteManager)
 
-router.get('/devices/:managerId', auth(), validate(userValidation.getManager), managerController.getManagerAssignedDevices);
+router.get('/devices/:managerId', auth('getDevice'), validate(userValidation.getManager), managerController.getManagerAssignedDevices);
 
 
 module.exports = router;

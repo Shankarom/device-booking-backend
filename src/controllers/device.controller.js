@@ -17,7 +17,7 @@ const getDevices = catchAsync(async (req, res) => {
     const filter = pick(req.query, ['name']);
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     const { search } = pick(req.query, ['search']);
-    console.log("🚀 ~ getDevices ~ search:", search)
+    filter.isDeleted = false
     const result = await deviceService.queryDevices(filter, options, search);
     return res.status(200).json({
         message:"Devices list",success: true, result

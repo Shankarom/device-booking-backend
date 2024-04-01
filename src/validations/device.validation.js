@@ -4,7 +4,12 @@ const { objectId } = require('./custom.validation');
 const createDevice = {
     body: Joi.object().keys({
       name: Joi.string().required(),
-      deviceType: Joi.string()
+      deviceType: Joi.string().required(),
+      description: Joi.string(),
+      purpose: Joi.string(),
+      price: Joi.string().required(),
+      runningDuration: Joi.string().required(),
+      location: Joi.string().required()
     }),
 };
 

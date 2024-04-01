@@ -10,6 +10,21 @@ const deviceSchema = mongoose.Schema(
     deviceType: {
       type: String
     },
+    description: {
+      type: String
+    },
+    purpose: {
+      type: String
+    },
+    price: {
+      type: String
+    },
+    runningDuration: {
+      type: String
+    },
+    location: {
+      type: String
+    },
     isDeleted: {
       type: Boolean,
       default: false

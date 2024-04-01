@@ -69,7 +69,6 @@ const getManagerAssignedDevices = catchAsync(async (req, res) => {
     const filter = pick(req.query, ['name']);
     const options = pick(req.query, ['sortBy', 'limit', 'page']);
     const { search } = pick(req.query, ['search']);
-
     const result = await userService.getManagerAssignedDevices(req.params.managerId, options, search);
     const finalData = result.data
     const pageDetails = {
